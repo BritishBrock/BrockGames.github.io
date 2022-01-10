@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            height: 200px;
+            width: 200px;
+            border:1px solid black;
+            position: absolute;
+        }
+        #container{
+            border: none;
+            width: 600px;
+            height:600px;
+            margin: auto;
+            margin-top: 100px;
+            position: relative;
+            padding: auto;
+        }
+        #d1{
+            position: absolute;
+            left: 0%;
+            top:0%;
+        }
+        #d2{
+            position: absolute;
+            left: 33%;
+            top:0%;
+        }
+        #d3{
+            position: absolute;
+            left: 66%;
+            top:0%;
+        }
+        #d4{
+            position: absolute;
+            left: 0%;
+            top:33%;
+        }
+        #d5{
+            position: absolute;
+            left: 33%;
+            top:33%;
+        }
+        #d6{
+            position: absolute;
+            left: 66%;
+            top:33%;
+        }
+        #d7{
+            position: absolute;
+            left: 0%;
+            top:66%;
+        }
+        #d8{
+            position: absolute;
+            left: 33%;
+            top:66%;
+        }
+        #d9{
+            position: absolute;
+            left: 66%;
+            top:66%;
+        }
+        p{
+            margin: auto;
+            width: 200px;
+            height:100px;
+            font-size: 30px;
+            margin: auto;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div onclick="caja(1)" id="d1"></div> <div onclick="caja(2)"id="d2"></div><div onclick="caja(3)"id="d3"></div>
+        <div onclick="caja(4)"id="d4"></div><div onclick="caja(5)"id="d5"></div> <div onclick="caja(6)"id="d6"></div>
+        <div onclick="caja(7)"id="d7"></div><div onclick="caja(8)"id="d8"></div><div onclick="caja(9)"id="d9"></div>
+        
+    </div>
+    <p id="ganador">Ha Ganado: </p>
+    
+    <script>
+        var turno = false;
+        var tabla = [0,0,0,0,0,0,0,0,0]
+        var cont = 0;
+
+        function caja(numDeCaja){
+            if( document.getElementById("d"+numDeCaja).style.backgroundColor == ""){
+                if(turno){
+                document.getElementById("d"+numDeCaja).style.backgroundColor = "red";
+                tabla[numDeCaja -1] = 1;
+                cont++;
+                turno = false;
+                
+                }else{
+                    document.getElementById("d"+numDeCaja).style.backgroundColor = "blue";
+                    turno = true;
+                    tabla[numDeCaja - 1] = 2;
+                    cont++;
+                }
+            }
+            check();
+
+            function reset(){
+                for (let index = 0; index < tabla.length; index++) {
+                    document.getElementById("d"+(index+1)).style.backgroundColor = "";
+                    tabla[index] = 0;
+                    cont = 0;
+                    
+                }
+            }
+
+
+
+            function check(){
+                if((tabla[0] == 1 && tabla[1] == 1 &&tabla[2] == 1) ||  (tabla[3] == 1 && tabla[4] == 1 &&tabla[5] == 1)||  (tabla[6] == 1 && tabla[7] == 1 &&tabla[8] == 1)
+                        || (tabla[0] == 1 && tabla[3] == 1 &&tabla[6] == 1)|| (tabla[1] == 1 && tabla[4] == 1 &&tabla[7] == 1) || (tabla[2] == 1 && tabla[5] == 1 &&tabla[8] == 1)
+                        || (tabla[0] == 1 && tabla[4] == 1 &&tabla[8] == 1)|| (tabla[2] == 1 && tabla[4] == 1 &&tabla[6] == 1)){
+                    document.getElementById("ganador").innerHTML = "Ha Ganado: juagador 1 ";
+                    document.getElementById("ganador").style.color = "red";
+                    reset()
+                }
+                else if((tabla[0] == 2 && tabla[1] == 2 &&tabla[2] == 2) ||  (tabla[3] == 2 && tabla[4] == 2 &&tabla[5] == 2)||  (tabla[6] == 2 && tabla[7] == 2 &&tabla[8] == 2)
+                        || (tabla[0] == 2 && tabla[3] == 2 &&tabla[6] == 2)|| (tabla[1] == 2 && tabla[4] == 2 &&tabla[7] == 2) || (tabla[2] == 2 && tabla[5] == 2 &&tabla[8] == 2)
+                        || (tabla[0] == 2 && tabla[4] == 2 &&tabla[8] == 2)|| (tabla[2] == 2 && tabla[4] == 2 &&tabla[6] == 2)){
+                    document.getElementById("ganador").innerHTML = "Ha Ganado: juagador 2 ";
+                    document.getElementById("ganador").style.color = "blue";
+                    reset();
+             }
+                
+             
+             if(cont == 9){
+                document.getElementById("ganador").innerHTML ="has emaptado";
+                document.getElementById("ganador").style.color = "blue";
+                    reset();
+                }
+                    
+            }
+         }
+            
+        
+    </script>
+</body>
+</html>

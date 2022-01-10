@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html,body{
+            height:100%;
+            margin: 0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <div id="player">
+
+        </div>
+        <div id="floor">
+    
+        </div>
+    </div>
+    
+    <script>
+        var floor = document.getElementById("floor");
+        var player = document.getElementById("player");
+        var game = document.getElementById("game");
+        var isFoor = true;
+
+        genGame();
+
+        function jugador(nombre,edad){
+            this.nombre = nombre;
+            this.edad = edad;
+        }
+        var jugador1 = new jugador("brock",18)
+        console.log(jugador1.edad);
+
+
+        function genGame(){
+            game.style.width = "100%";
+            game.style.height ="100%";
+            game.style.position = "relative"
+            game.style.backgroundColor = "antiquewhite"
+            genFloor();
+            genPlayer();
+           
+            function genFloor(){
+                floor.style.width = "100%";
+                floor.style.height = "200px"
+                floor.style.backgroundColor = "white";
+                floor.style.borderTop = "10px solid black"
+                floor.style.position = "absolute"
+                floor.style.bottom = "0";
+            }
+            function genPlayer(){
+                player.style.width = "50px"
+                player.style.height = "100px"
+                player.style.backgroundColor = "red";
+                player.style.position = "absolute"
+                player.style.left = "50px"
+                player.style.bottom = parseInt(floor.style.height) + "px";
+            }
+        }
+        window.setInterval(()=>{genBox()},2000)
+        window.setInterval(()=>{
+            
+            let boxes = document.getElementsByClassName("box");
+            console.log(boxes)
+            for(let i = 0; i < boxes.length;i++){
+                if(parseInt(boxes[i].style.left) <= -50){
+                    boxes[i].remove();
+                }else{
+                    console.log(boxes[i].style.left)
+                    boxes[i].style.left = parseInt(boxes[i].style.left) - 10 +"px"
+                }
+            }
+            if(!(player.style.bottom <= floor.style.height)){
+                player.style.bottom = parseInt(player.style.bottom) - 5 +"px";
+            }else{
+                isFoor = true;
+            }       
+        },20)
+        function genBox(){
+            let box = document.createElement("div");
+            box.className = "box";
+            box.style.width = "50px";
+            box.style.height = "50px";
+            box.style.backgroundColor = "red";
+            box.style.position = "absolute";
+            box.style.left = "1000px";
+            box.style.bottom = parseInt(floor.style.height) + "px";
+            game.append(box)
+        }
+        
+    
+        var pressed = {};
+
+        window.onkeydown = function(e){
+            if(e.key == " " && isFoor){
+                pressed[e.key];
+                if(pressed[e.key])return;
+                pressed[e.key] = e.timeStamp;
+            }
+        }
+
+        window.onkeyup=function(e){
+            if(e.key == " " &&isFoor){
+                if ( !pressed[e.key] ) return;
+                var duration = ( e.timeStamp - pressed[e.key] ) / 1000;
+                if(duration > 0.3 ){duration = 1}
+                console.log(200*(duration +1)); 
+                player.style.bottom = parseInt(player.style.bottom) + (200*(duration +1)) + "px";
+                isFoor = false;
+                pressed[e.key] = 0;
+            }
+        }
+
+
+    </script>
+</body>
+</html>
